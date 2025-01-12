@@ -20,7 +20,7 @@ app.use(morgan('dev'));
 // Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100 // limit each IP to 100 requests per windowMs
+  max: 100, // limit each IP to 100 requests per windowMs
 });
 app.use('/api', limiter);
 
@@ -68,7 +68,7 @@ const errorHandler = (err, req, res, next) => {
   res.status(statusCode).json({
     status: 'error',
     message,
-    ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
+    ...(process.env.NODE_ENV === 'development' && { stack: err.stack }),
   });
 };
 
@@ -79,7 +79,7 @@ app.use(errorHandler);
 app.all('*', (req, res) => {
   res.status(404).json({
     status: 'error',
-    message: `Can't find ${req.originalUrl} on this server!`
+    message: `Can't find ${req.originalUrl} on this server!`,
   });
 });
 
